@@ -116,6 +116,10 @@ class SetGameViewModel: ObservableObject {
     var gameOver: Bool {
         self.model.gameOver
     }
+    
+    var isChecking: Bool {
+        self.model.isChecking
+    }
 }
 
 struct CradContent {

@@ -15,7 +15,10 @@ struct SetGame<CardContentType> {
     var score: Int = 0
     var gameOver: Bool = false
     var bonus: Int = 0
+    var isChecking: Bool = false
+    
     mutating func check()  {
+        isChecking = true
         if  (selectedCards[0].contentShape != selectedCards[1].contentShape &&
                 selectedCards[0].contentShading != selectedCards[1].contentShading &&
                 selectedCards[0].contentColor == selectedCards[1].contentColor &&
@@ -92,6 +95,7 @@ struct SetGame<CardContentType> {
             bonus = Int(bonusTimeLimit * 3)
             gameOver = true
         }
+        isChecking = false
     }
     
     mutating func getRemainingTime(_ remainingSeconds: TimeInterval) {

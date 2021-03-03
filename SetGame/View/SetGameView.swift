@@ -47,6 +47,7 @@ struct SetGameView: View {
                         .frame(width: geometry.size.width, height: 30, alignment: .leading)
                         
                         MainGameField(viewModel: viewModel, geometry: geometry)
+                            .disabled(viewModel.isChecking)
                         
                         HStack {
                             Button(action: {
