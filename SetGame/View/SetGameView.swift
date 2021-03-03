@@ -101,7 +101,7 @@ struct SetGameView: View {
                             .modify(disabled: viewModel.gameOver)
                             .background(Color("gameOverLabel"))
                             .layoutPriority(1)
-                        //.animation(viewModel.gameOver ? Animation.interpolatingSpring(stiffness: 2, damping: 0) : .default)
+                            .cornerRadius(5)
                         Button(action: {
                             withAnimation(.easeInOut(duration: 1)) {
                                 viewModel.reset()
@@ -118,11 +118,12 @@ struct SetGameView: View {
                         .animation(viewModel.gameOver ? Animation.interpolatingSpring(stiffness: 2, damping: 0) : .default)
                         .background(Color("newGameButton"))
                         .frame(minHeight: 35)
+                        .cornerRadius(5)
                         
                     }
                     .foregroundColor(Color(.white))
                     .font(Font.system(size: 20))
-                    .cornerRadius(5)
+                    
                     .opacity(viewModel.gameOver ? 1 : 0)
                     .frame(width: geometry.size.width * 0.80, height: 200, alignment: .center)
                     .offset(x: 0, y: -30)
