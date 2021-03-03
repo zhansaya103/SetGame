@@ -85,6 +85,37 @@ class SetGameViewModel: ObservableObject {
     var isThreeMatched: Bool {
         model.isThreeMatched
     }
+    
+    var selectedCards: [SetGame<CradContent>.Card] {
+        return model.selectedCards
+    }
+    
+    func check() {
+        self.model.check()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.model.unSelect()
+        }
+    }
+    
+    func getRemainingSeconds(_ remainingSeconds: TimeInterval) {
+        self.model.getRemainingTime(remainingSeconds)
+    }
+    
+    var bonusTimeLimit: TimeInterval {
+        self.model.bonusTimeLimit
+    }
+    
+    var score: Int {
+        self.model.score
+    }
+    
+    var bonus: Int {
+        self.model.bonus
+    }
+    
+    var gameOver: Bool {
+        self.model.gameOver
+    }
 }
 
 struct CradContent {

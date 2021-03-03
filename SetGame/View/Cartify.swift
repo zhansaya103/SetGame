@@ -23,9 +23,9 @@ struct Cartify: ViewModifier {
     
     var color : Color {
         switch contentColor {
-            case .teal: return Color(.systemTeal)
-            case .pink: return Color(.systemPink)
-            case .orange: return Color(.systemOrange)
+        case .teal: return Color(.systemTeal)
+        case .pink: return Color(.systemPink)
+        case .orange: return Color(.systemOrange)
         }
     }
     
@@ -34,19 +34,19 @@ struct Cartify: ViewModifier {
         ZStack {
             if isFaceUp {
                 Group {
-                    RoundedRectangle(cornerRadius: cornerRadius).fill(Color(isSelected ? #colorLiteral(red: 0.8007984757, green: 0.8062334657, blue: 1, alpha: 0.5) : .white))
-                    RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: isSelected ? 3.0 : 2.0).blur(radius: isSelected ? 4.0 : 0)
+                    RoundedRectangle(cornerRadius: cornerRadius).fill(Color(isSelected ? .white : UIColor(Color("mildGray"))))
+                    RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: isSelected ? 4.0 : 3.0).blur(radius: isSelected ? 4.0 : 0).brightness(0.80)
                     if let isMatched = self.isMatched {
                         Group {
-                        if isMatched {
-                            
-                                RoundedRectangle(cornerRadius: cornerRadius).fill(Color(.green)).opacity(0.15)
-                                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: 3.0 ).foregroundColor(Color(.green)).blur(radius: 4)
-                            
-                        } else {
-                            RoundedRectangle(cornerRadius: cornerRadius).fill(Color(.red)).opacity(0.15)
-                            RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: 3.0 ).foregroundColor(Color(.red)).blur(radius: 4)
-                        }
+                            if isMatched {
+                                
+                                RoundedRectangle(cornerRadius: cornerRadius).fill(Color(.green)).opacity(0.10).brightness(0.80)
+                                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: 3.0 ).foregroundColor(Color(.green)).blur(radius: 4).brightness(0.80)
+                                
+                            } else {
+                                RoundedRectangle(cornerRadius: cornerRadius).fill(Color(.red)).opacity(0.10).brightness(0.80)
+                                RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: 3.0 ).foregroundColor(Color(.red)).blur(radius: 4).brightness(0.80)
+                            }
                         }.opacity(isChecked ? 1 : 0)
                     }
                     content

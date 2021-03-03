@@ -11,83 +11,107 @@ struct SetGame<CardContentType> {
     var cards: Array<Card>
     var selectedCards: [Card]
     var isThreeMatched = false
+    var bonusTimeLimit: TimeInterval = 35
+    var score: Int = 0
+    var gameOver: Bool = false
+    var bonus: Int = 0
+    mutating func check()  {
+        if  (selectedCards[0].contentShape != selectedCards[1].contentShape &&
+                selectedCards[0].contentShading != selectedCards[1].contentShading &&
+                selectedCards[0].contentColor == selectedCards[1].contentColor &&
+                selectedCards[0].contentShape != selectedCards[2].contentShape &&
+                selectedCards[0].contentShading != selectedCards[2].contentShading &&
+                selectedCards[0].contentColor == selectedCards[2].contentColor &&
+                selectedCards[1].contentShape != selectedCards[2].contentShape) ||
+                
+                (selectedCards[0].contentShape == selectedCards[1].contentShape &&
+                    selectedCards[0].contentShading == selectedCards[1].contentShading &&
+                    selectedCards[0].contentColor != selectedCards[1].contentColor &&
+                    selectedCards[0].contentShape == selectedCards[2].contentShape &&
+                    selectedCards[0].contentShading == selectedCards[2].contentShading &&
+                    selectedCards[0].contentColor != selectedCards[2].contentColor &&
+                    selectedCards[1].contentShape == selectedCards[2].contentShape) ||
+                
+                (selectedCards[0].contentShape == selectedCards[1].contentShape &&
+                    selectedCards[0].contentShading == selectedCards[1].contentShading &&
+                    selectedCards[0].contentColor != selectedCards[1].contentColor &&
+                    selectedCards[0].contentShape == selectedCards[2].contentShape &&
+                    selectedCards[0].contentShading == selectedCards[2].contentShading &&
+                    selectedCards[0].contentColor != selectedCards[2].contentColor &&
+                    selectedCards[1].contentShape == selectedCards[2].contentShape) ||
+                
+                (selectedCards[0].contentShape != selectedCards[1].contentShape &&
+                    selectedCards[0].contentShading == selectedCards[1].contentShading &&
+                    selectedCards[0].contentColor == selectedCards[1].contentColor &&
+                    selectedCards[0].contentShape != selectedCards[2].contentShape &&
+                    selectedCards[0].contentShading == selectedCards[2].contentShading &&
+                    selectedCards[0].contentColor == selectedCards[2].contentColor &&
+                    selectedCards[1].contentShape != selectedCards[2].contentShape) {
+            
+            
+            for i in 0..<3 {
+                let index = cards.firsrIndexOf(matching: selectedCards[i])!
+                cards[index].isMatched = true
+                cards[index].isChecked = true
+            }
+            isThreeMatched = true
+        } else {
+            
+            for i in 0..<3 {
+                let index = cards.firsrIndexOf(matching: selectedCards[i])!
+                cards[index].isMatched = false
+                cards[index].isChecked = true
+            }
+            isThreeMatched = false
+        }
+        
+    }
+    
+    
+    mutating func unSelect() {
+        
+        if self.isThreeMatched {
+            score = score + 5
+            for i in 0..<3 {
+                let index = cards.firsrIndexOf(matching: selectedCards[i])!
+                cards.remove(at: index)
+            }
+            
+        } else {
+            score = score < 5 ? 0 : score - 5
+            for i in 0..<3 {
+                let index = cards.firsrIndexOf(matching: selectedCards[i])!
+                cards[index].isMatched = nil
+                cards[index].isChecked = false
+                cards[index].isSelected = false
+                
+            }
+        }
+        selectedCards.removeAll()
+        if cards.count == 0 {
+            bonus = Int(bonusTimeLimit * 3)
+            gameOver = true
+        }
+    }
+    
+    mutating func getRemainingTime(_ remainingSeconds: TimeInterval) {
+        print(remainingSeconds)
+        bonusTimeLimit = remainingSeconds
+        if bonusTimeLimit == 0 {
+            gameOver = true
+        }
+    }
+    
     mutating func choose(card: Card) {
         let index = cards.firsrIndexOf(matching: card)!
         cards[index].isSelected = !cards[index].isSelected
         if cards[index].isSelected {
-            
-                selectedCards.append(cards[index])
-                if selectedCards.count == 3 {
-                   
-                    if  (selectedCards[0].contentShape != selectedCards[1].contentShape &&
-                        selectedCards[0].contentShading != selectedCards[1].contentShading &&
-                        selectedCards[0].contentColor == selectedCards[1].contentColor &&
-                        selectedCards[0].contentShape != selectedCards[2].contentShape &&
-                        selectedCards[0].contentShading != selectedCards[2].contentShading &&
-                        selectedCards[0].contentColor == selectedCards[2].contentColor &&
-                        selectedCards[1].contentShape != selectedCards[2].contentShape) ||
-                        
-                        (selectedCards[0].contentShape == selectedCards[1].contentShape &&
-                        selectedCards[0].contentShading == selectedCards[1].contentShading &&
-                        selectedCards[0].contentColor != selectedCards[1].contentColor &&
-                        selectedCards[0].contentShape == selectedCards[2].contentShape &&
-                        selectedCards[0].contentShading == selectedCards[2].contentShading &&
-                        selectedCards[0].contentColor != selectedCards[2].contentColor &&
-                        selectedCards[1].contentShape == selectedCards[2].contentShape) ||
-                        
-                        (selectedCards[0].contentShape == selectedCards[1].contentShape &&
-                        selectedCards[0].contentShading == selectedCards[1].contentShading &&
-                        selectedCards[0].contentColor != selectedCards[1].contentColor &&
-                        selectedCards[0].contentShape == selectedCards[2].contentShape &&
-                        selectedCards[0].contentShading == selectedCards[2].contentShading &&
-                        selectedCards[0].contentColor != selectedCards[2].contentColor &&
-                        selectedCards[1].contentShape == selectedCards[2].contentShape) ||
-                            
-                        (selectedCards[0].contentShape != selectedCards[1].contentShape &&
-                        selectedCards[0].contentShading == selectedCards[1].contentShading &&
-                        selectedCards[0].contentColor == selectedCards[1].contentColor &&
-                        selectedCards[0].contentShape != selectedCards[2].contentShape &&
-                        selectedCards[0].contentShading == selectedCards[2].contentShading &&
-                        selectedCards[0].contentColor == selectedCards[2].contentColor &&
-                        selectedCards[1].contentShape != selectedCards[2].contentShape) {
-                        
-                        for i in 0..<3 {
-                            let index = cards.firsrIndexOf(matching: selectedCards[i])!
-                            cards[index].isMatched = true
-                            cards[index].isChecked = true
-                            //cards.remove(at: index)
-                        }
-                        isThreeMatched = true
-                    } else {
-                        for i in 0..<3 {
-                            let index = cards.firsrIndexOf(matching: selectedCards[i])!
-                            cards[index].isMatched = false
-                            cards[index].isChecked = true
-                        }
-                        isThreeMatched = false
-                    }
-                    
-                }
+            selectedCards.append(cards[index])
             if selectedCards.count > 3 {
-                if isThreeMatched {
-                    
-                    for i in 0..<3 {
-                        let index = cards.firsrIndexOf(matching: selectedCards[i])!
-                        cards.remove(at: index)
-                    }
-                    
-                } else {
-                    for i in 0..<3 {
-                        let index = cards.firsrIndexOf(matching: selectedCards[i])!
-                        cards[index].isMatched = nil
-                        cards[index].isChecked = false
-                        cards[index].isSelected = false
-                    
-                    }
-                    
-                }
+                
                 for _ in 0..<3 {
-                    selectedCards.removeFirst()
+                    let index = cards.firsrIndexOf(matching: selectedCards.removeFirst())!
+                    cards[index].isSelected = false
                 }
             }
         } else {
@@ -108,15 +132,15 @@ struct SetGame<CardContentType> {
         self.cards = Array<Card>()
         self.selectedCards = [Card]()
         
-            for i in 0..<numberOfCards {
-                let content = cardContentFactory(i) as! CradContent
-                cards.append(Card(id: i,
-                                  isMatched: false,
-                                  isSelected: false,
-                                  contentShape: content.shape,
-                                  contentColor: content.color,
-                                  contentShading: content.shading))
-            }
+        for i in 0..<numberOfCards {
+            let content = cardContentFactory(i) as! CradContent
+            cards.append(Card(id: i,
+                              isMatched: false,
+                              isSelected: false,
+                              contentShape: content.shape,
+                              contentColor: content.color,
+                              contentShading: content.shading))
+        }
         print(cards)
         self.cards.shuffle()
         
