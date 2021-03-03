@@ -110,7 +110,7 @@ struct SetGameView: View {
                                 timeLimit = viewModel.bonusTimeLimit
                             }
                         }, label: {
-                            Label("New Gamen", image: "arrow.counterclockwise")
+                            Label("New Game", image: "arrow.counterclockwise")
                             
                         })
                         .modify(disabled: viewModel.gameOver)
@@ -146,16 +146,14 @@ struct SetGameView: View {
     }
     
     
-   
+    
     
     func startBonusTimeAnimation() {
-        //var timeLimit = Int(viewModel.bonusTimeLimit)
+        
         withAnimation(.linear(duration: viewModel.bonusTimeLimit)) {
-            
             timeLimit -= 1
             animatedBonusRemaining = 20
             inidcColor = Color.init(.sRGB, red: 0.263 * ((animatedBonusRemaining + 1) / 4 ), green: 0.839 / (animatedBonusRemaining + 1), blue: 0.590 / ((animatedBonusRemaining + 1) * 5), opacity: 1)
-            print("\(timeLimit)")
         }
     }
     
