@@ -35,13 +35,23 @@ class SetGameViewModel: ObservableObject {
         let cardContentStripedR = CradContent(shape: .rectangle, color: .orange, shading: .striped)
         let cardContentStripedO = CradContent(shape: .oval, color: .orange, shading: .striped)
         
+        let cardContentStripedDT = CradContent(shape: .diamond, color: .teal, shading: .striped)
+        let cardContentStripedRT = CradContent(shape: .rectangle, color: .teal, shading: .striped)
+        let cardContentStripedOT = CradContent(shape: .oval, color: .teal, shading: .striped)
+        
+        let cardContentStripedDP = CradContent(shape: .diamond, color: .pink, shading: .striped)
+        let cardContentStripedRP = CradContent(shape: .rectangle, color: .pink, shading: .striped)
+        let cardContentStripedOP = CradContent(shape: .oval, color: .pink, shading: .striped)
+        
         let cardContentList = [cardContentEmptyD, cardContentEmptyR, cardContentEmptyO,
                                cardContentSolidD, cardContentSolidR, cardContentSolidO,
                                 cardContentSolidDD, cardContentSolidRR, cardContentSolidOO,
                                 cardContentSolidDDD, cardContentSolidRRR, cardContentSolidOOO,
                                 cardContentEmptyDD, cardContentEmptyRR, cardContentEmptyOO,
                                 cardContentEmptyDDD, cardContentEmptyRRR, cardContentEmptyOOO,
-                                cardContentStripedD, cardContentStripedR, cardContentStripedO]
+                                cardContentStripedD, cardContentStripedR, cardContentStripedO,
+                                cardContentStripedDT, cardContentStripedRT, cardContentStripedOT,
+                                cardContentStripedDP, cardContentStripedRP, cardContentStripedOP]
         
         return SetGame<CradContent>(numberOfCards: cardContentList.count) { index in
             cardContentList[index]}

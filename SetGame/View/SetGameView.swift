@@ -12,7 +12,7 @@ struct SetGameView: View {
     @State var animatedBonusRemaining: Double = 0
     @State var inidcColor = Color.init(.sRGB, red: 0.263, green: 0.839, blue: 0.590, opacity: 1)
     @State var timeLimit: TimeInterval = 30
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         HStack (alignment: .bottom, spacing: 0) {
@@ -22,14 +22,14 @@ struct SetGameView: View {
                         HStack {
                             Group {
                                 ZStack {
-                                    
                                     TimerIndicator(startWidth: geometry.size.width / 2)
                                         .fill(inidcColor)
                                     TimerIndicator(startWidth: geometry.size.width / 2)
                                         .stroke(lineWidth: 4.0).blur(radius: 3.0).brightness(0.40)
                                 }
                                 .cornerRadius(5)
-                                .frame(width: geometry.size.width / (2 * CGFloat(animatedBonusRemaining)), height: 30)
+                                //.frame(width: geometry.size.width / (CGFloat(46 - timeLimit) * 2 ), height: 30)
+                                .frame(width: geometry.size.width / (2 * CGFloat(animatedBonusRemaining + 1)), height: 30)
                                 .padding()
                                 .onAppear {
                                     self.startBonusTimeAnimation()
@@ -55,7 +55,7 @@ struct SetGameView: View {
                                 viewModel.check()
                                 viewModel.getRemainingSeconds(timeLimit)
                             }) {
-                                Label("Check", image: " ")
+                                Text("Check")
                             }
                             .foregroundColor(Color(.white))
                             .disabled( withAnimation(.easeInOut) {
@@ -97,7 +97,7 @@ struct SetGameView: View {
                     
                     VStack(spacing: 20) {
                         
-                        Label("Score: \(viewModel.score)\nTime bonus: +\(viewModel.bonus)\nTotal: \(viewModel.score + viewModel.bonus)", image: " ")
+                        Text("Score: \(viewModel.score)\nTime bonus: +\(viewModel.bonus)\nTotal: \(viewModel.score + viewModel.bonus)")
                             .modify(disabled: viewModel.gameOver)
                             .background(Color("gameOverLabel"))
                             .layoutPriority(1)
@@ -107,11 +107,13 @@ struct SetGameView: View {
                                 viewModel.reset()
                                 animatedBonusRemaining = 0
                                 inidcColor = Color.init(.sRGB, red: 0.263, green: 0.839, blue: 0.590, opacity: 1)
-                                startBonusTimeAnimation()
                                 timeLimit = viewModel.bonusTimeLimit
+                                startBonusTimeAnimation()
+                                
+                                
                             }
                         }, label: {
-                            Label("New Game", image: "arrow.counterclockwise")
+                            Text("New Game")
                             
                         })
                         .modify(disabled: viewModel.gameOver)
@@ -280,8 +282,10 @@ struct ResetButtonView: View {
                 viewModel.reset()
                 animatedBonusRemaining = 0
                 inidcColor = Color.init(.sRGB, red: 0.263, green: 0.839, blue: 0.590, opacity: 1)
-                startBonusTimeAnimation()
                 timeLimit = viewModel.bonusTimeLimit
+                startBonusTimeAnimation()
+                
+                
             }
         }, label: {
             Text("New Game").bold()

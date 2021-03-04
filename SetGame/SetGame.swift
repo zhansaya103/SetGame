@@ -11,7 +11,7 @@ struct SetGame<CardContentType> {
     var cards: Array<Card>
     var selectedCards: [Card]
     var isThreeMatched = false
-    var bonusTimeLimit: TimeInterval = 35
+    var bonusTimeLimit: TimeInterval = 55
     var score: Int = 0
     var gameOver: Bool = false
     var bonus: Int = 0
@@ -20,6 +20,14 @@ struct SetGame<CardContentType> {
     mutating func check()  {
         isChecking = true
         if  (selectedCards[0].contentShape != selectedCards[1].contentShape &&
+                selectedCards[0].contentShading == selectedCards[1].contentShading &&
+                selectedCards[0].contentColor != selectedCards[1].contentColor &&
+                selectedCards[0].contentShape != selectedCards[2].contentShape &&
+                selectedCards[0].contentShading == selectedCards[2].contentShading &&
+                selectedCards[0].contentColor != selectedCards[2].contentColor &&
+                selectedCards[1].contentShape != selectedCards[2].contentShape) ||
+                
+                (selectedCards[0].contentShape != selectedCards[1].contentShape &&
                 selectedCards[0].contentShading != selectedCards[1].contentShading &&
                 selectedCards[0].contentColor == selectedCards[1].contentColor &&
                 selectedCards[0].contentShape != selectedCards[2].contentShape &&
@@ -72,7 +80,9 @@ struct SetGame<CardContentType> {
     
     
     mutating func unSelect() {
-        
+        guard selectedCards.count != 0 else {
+            return
+        }
         if self.isThreeMatched {
             score = score + 5
             for i in 0..<3 {
