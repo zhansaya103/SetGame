@@ -28,7 +28,6 @@ struct SetGameView: View {
                                         .stroke(lineWidth: 4.0).blur(radius: 3.0).brightness(0.40)
                                 }
                                 .cornerRadius(5)
-                                //.frame(width: geometry.size.width / (CGFloat(46 - timeLimit) * 2 ), height: 30)
                                 .frame(width: geometry.size.width / (2 * CGFloat(animatedBonusRemaining + 1)), height: 30)
                                 .padding()
                                 .onAppear {
