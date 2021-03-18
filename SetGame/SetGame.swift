@@ -19,7 +19,7 @@ struct SetGame<CardContentType> {
     
     mutating func check()  {
         isChecking = true
-        if  (selectedCards[0].contentShape != selectedCards[1].contentShape &&
+        if  (   selectedCards[0].contentShape != selectedCards[1].contentShape &&
                 selectedCards[0].contentShading == selectedCards[1].contentShading &&
                 selectedCards[0].contentColor != selectedCards[1].contentColor &&
                 selectedCards[0].contentShape != selectedCards[2].contentShape &&

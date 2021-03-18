@@ -12,46 +12,15 @@ class SetGameViewModel: ObservableObject {
     @Published private var model: SetGame<CradContent>
     
     static func createSetGame() -> SetGame<CradContent> {
-       
-        let cardContentEmptyD = CradContent(shape: .diamond, color: .orange, shading: .empty)
-        let cardContentEmptyR = CradContent(shape: .rectangle, color: .orange, shading: .empty)
-        let cardContentEmptyO = CradContent(shape: .oval, color: .orange, shading: .empty)
-        let cardContentEmptyDD = CradContent(shape: .diamond, color: .teal, shading: .empty)
-        let cardContentEmptyRR = CradContent(shape: .rectangle, color: .teal, shading: .empty)
-        let cardContentEmptyOO = CradContent(shape: .oval, color: .teal, shading: .empty)
-        let cardContentEmptyDDD = CradContent(shape: .diamond, color: .pink, shading: .empty)
-        let cardContentEmptyRRR = CradContent(shape: .rectangle, color: .pink, shading: .empty)
-        let cardContentEmptyOOO = CradContent(shape: .oval, color: .pink, shading: .empty)
-        let cardContentSolidD = CradContent(shape: .diamond, color: .orange, shading: .solid)
-        let cardContentSolidR = CradContent(shape: .rectangle, color: .orange, shading: .solid)
-        let cardContentSolidO = CradContent(shape: .oval, color: .orange, shading: .solid)
-        let cardContentSolidDD = CradContent(shape: .diamond, color: .teal, shading: .solid)
-        let cardContentSolidRR = CradContent(shape: .rectangle, color: .teal, shading: .solid)
-        let cardContentSolidOO = CradContent(shape: .oval, color: .teal, shading: .solid)
-        let cardContentSolidDDD = CradContent(shape: .diamond, color: .pink, shading: .solid)
-        let cardContentSolidRRR = CradContent(shape: .rectangle, color: .pink, shading: .solid)
-        let cardContentSolidOOO = CradContent(shape: .oval, color: .pink, shading: .solid)
-        let cardContentStripedD = CradContent(shape: .diamond, color: .orange, shading: .striped)
-        let cardContentStripedR = CradContent(shape: .rectangle, color: .orange, shading: .striped)
-        let cardContentStripedO = CradContent(shape: .oval, color: .orange, shading: .striped)
-        
-        let cardContentStripedDT = CradContent(shape: .diamond, color: .teal, shading: .striped)
-        let cardContentStripedRT = CradContent(shape: .rectangle, color: .teal, shading: .striped)
-        let cardContentStripedOT = CradContent(shape: .oval, color: .teal, shading: .striped)
-        
-        let cardContentStripedDP = CradContent(shape: .diamond, color: .pink, shading: .striped)
-        let cardContentStripedRP = CradContent(shape: .rectangle, color: .pink, shading: .striped)
-        let cardContentStripedOP = CradContent(shape: .oval, color: .pink, shading: .striped)
-        
-        let cardContentList = [cardContentEmptyD, cardContentEmptyR, cardContentEmptyO,
-                               cardContentSolidD, cardContentSolidR, cardContentSolidO,
-                                cardContentSolidDD, cardContentSolidRR, cardContentSolidOO,
-                                cardContentSolidDDD, cardContentSolidRRR, cardContentSolidOOO,
-                                cardContentEmptyDD, cardContentEmptyRR, cardContentEmptyOO,
-                                cardContentEmptyDDD, cardContentEmptyRRR, cardContentEmptyOOO,
-                                cardContentStripedD, cardContentStripedR, cardContentStripedO,
-                                cardContentStripedDT, cardContentStripedRT, cardContentStripedOT,
-                                cardContentStripedDP, cardContentStripedRP, cardContentStripedOP]
+        var cardContentList: [CradContent] = []
+        for shape in Shapes.allCases {
+            for shading in Shading.allCases {
+                for color in ContentColor.allCases {
+                    cardContentList.append(CradContent(shape: shape, color: color, shading: shading))
+                }
+            }
+        }
+    
         
         return SetGame<CradContent>(numberOfCards: cardContentList.count) { index in
             cardContentList[index]}
@@ -138,13 +107,13 @@ struct CradContent {
     var shading: Shading
 }
 
-enum Shapes {
+enum Shapes: CaseIterable {
     case diamond
     case rectangle
     case oval
 }
 
-enum Shading {
+enum Shading: CaseIterable {
     case solid
     case striped
     case empty

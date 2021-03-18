@@ -261,7 +261,7 @@ struct CardView: View {
     
 }
 
-enum ContentColor {
+enum ContentColor: CaseIterable {
     case teal
     case orange
     case pink
@@ -342,7 +342,7 @@ struct MainGameField: View {
                 .animation( Animation.linear)
             }
         }
-        .frame(width: geometry.size.width, height: geometry.size.height * 0.65, alignment: .bottom)
+        .frame(width: geometry.size.width * 0.90, height: geometry.size.height * 0.60, alignment: .bottom)
         .transition(AnyTransition.scale)
     }
 }
