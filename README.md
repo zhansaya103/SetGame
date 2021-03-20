@@ -14,7 +14,12 @@ A *set* consists of three cards in which **one** of the three categories of feat
 ## About the Project 
 The application was created to memorize the material from Stanford University’s course [CS193p (Developing Applications for iOS using SwiftUI)](https://cs193p.sites.stanford.edu).
 
-## Technologies 
-- **Swift 5**
-- **SwiftUI**
-- **MVVM**
+- ### Technologies 
+     - **Swift 5**
+     - **SwiftUI**
+     - **MVVM**
+
+- ### To do:
+     - Store and update max score
+     - Add difficulty levels
+
