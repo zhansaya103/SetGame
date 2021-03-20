@@ -22,4 +22,6 @@ The application was created to memorize the material from Stanford University’
 - ### To Do
      - Store and update max score
      - Add difficulty levels
+     - Sound effects
+     - *"How To Play"* section
 
