@@ -10,3 +10,11 @@ The deck consists of 27 unique cards set out to 4x3 grid of face-up cards. The g
 - **Shading** - Each shape on each card is either *solid*, *striped* or *empty*.
 
 A *set* consists of three cards in which **one** of the three categories of features - *color*, *shape*, and *shading* is either **the same** OR **all different**. Put another way: For each feature the three cards must avoid having two cards showing one version of the feature and the remaining card showing a different version.
+
+### About the Project
+The application was created to memorize the material from Stanford University’s course [CS193p (Developing Applications for iOS using SwiftUI)](https://cs193p.sites.stanford.edu).
+
+### Technologies
+- **Swift 5**
+- **SwiftUI**
+- **MVVM**
