@@ -19,7 +19,7 @@ The application was created to memorize the material from Stanford University’
      - **SwiftUI**
      - **MVVM**
 
-- ### To do:
+- ### To Do
      - Store and update max score
      - Add difficulty levels
 
