@@ -9,4 +9,4 @@ The deck consists of 27 unique cards set out to 4x3 grid of face-up cards. The g
 - **Shape** - Each card contains either an *oval*, *diamond* or *rectangle*.
 - **Shading** - Each shape on each card is either *solid*, *striped* or *empty*.
 
-A *set* consists of three cards in which one of the three categories of features - *color*, *shape*, and *shading* is **either the same** OR **all different**. Put another way: For each feature the three cards must avoid having two cards showing one version of the feature and the remaining card showing a different version.
+A *set* consists of three cards in which **one** of the three categories of features - *color*, *shape*, and *shading* is either **the same** OR **all different**. Put another way: For each feature the three cards must avoid having two cards showing one version of the feature and the remaining card showing a different version.
