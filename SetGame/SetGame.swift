@@ -11,7 +11,7 @@ struct SetGame<CardContentType> {
     var cards: Array<Card>
     var selectedCards: [Card]
     var isThreeMatched = false
-    var bonusTimeLimit: TimeInterval = 55
+    var bonusTimeLimit: TimeInterval = 120
     var score: Int = 0
     var gameOver: Bool = false
     var bonus: Int = 0
@@ -19,62 +19,91 @@ struct SetGame<CardContentType> {
     
     mutating func check()  {
         isChecking = true
-        if  (   selectedCards[0].contentShape != selectedCards[1].contentShape &&
-                selectedCards[0].contentShading == selectedCards[1].contentShading &&
-                selectedCards[0].contentColor != selectedCards[1].contentColor &&
-                selectedCards[0].contentShape != selectedCards[2].contentShape &&
-                selectedCards[0].contentShading == selectedCards[2].contentShading &&
-                selectedCards[0].contentColor != selectedCards[2].contentColor &&
-                selectedCards[1].contentShape != selectedCards[2].contentShape) ||
-                
-                (selectedCards[0].contentShape != selectedCards[1].contentShape &&
-                selectedCards[0].contentShading != selectedCards[1].contentShading &&
-                selectedCards[0].contentColor == selectedCards[1].contentColor &&
-                selectedCards[0].contentShape != selectedCards[2].contentShape &&
-                selectedCards[0].contentShading != selectedCards[2].contentShading &&
-                selectedCards[0].contentColor == selectedCards[2].contentColor &&
-                selectedCards[1].contentShape != selectedCards[2].contentShape) ||
-                
-                (selectedCards[0].contentShape == selectedCards[1].contentShape &&
-                    selectedCards[0].contentShading == selectedCards[1].contentShading &&
-                    selectedCards[0].contentColor != selectedCards[1].contentColor &&
-                    selectedCards[0].contentShape == selectedCards[2].contentShape &&
-                    selectedCards[0].contentShading == selectedCards[2].contentShading &&
-                    selectedCards[0].contentColor != selectedCards[2].contentColor &&
-                    selectedCards[1].contentShape == selectedCards[2].contentShape) ||
-                
-                (selectedCards[0].contentShape == selectedCards[1].contentShape &&
-                    selectedCards[0].contentShading == selectedCards[1].contentShading &&
-                    selectedCards[0].contentColor != selectedCards[1].contentColor &&
-                    selectedCards[0].contentShape == selectedCards[2].contentShape &&
-                    selectedCards[0].contentShading == selectedCards[2].contentShading &&
-                    selectedCards[0].contentColor != selectedCards[2].contentColor &&
-                    selectedCards[1].contentShape == selectedCards[2].contentShape) ||
-                
-                (selectedCards[0].contentShape != selectedCards[1].contentShape &&
-                    selectedCards[0].contentShading == selectedCards[1].contentShading &&
-                    selectedCards[0].contentColor == selectedCards[1].contentColor &&
-                    selectedCards[0].contentShape != selectedCards[2].contentShape &&
-                    selectedCards[0].contentShading == selectedCards[2].contentShading &&
-                    selectedCards[0].contentColor == selectedCards[2].contentColor &&
-                    selectedCards[1].contentShape != selectedCards[2].contentShape) {
+        isThreeMatched = false
+        // 1
+        let shapeOfFirstCard = selectedCards.first!.contentShape
+        let colorOfFirstCard = selectedCards.first!.contentColor
+        let shadingOfFirstCard = selectedCards.first!.contentShading
+        var sameShapesCount = 0
+        var sameColorCount = 0
+        var sameShadingCount = 0
+        var shapesAreSame = false
+        var colorsAreSame = false
+        var shadingsAreSame = false
+        var midCard: Card?
+        for card in selectedCards {
             
+            if card.id != selectedCards.last!.id && card.id != selectedCards.first!.id {
+                midCard = card
+            }
             
-            for i in 0..<3 {
-                let index = cards.firsrIndexOf(matching: selectedCards[i])!
+            if shapeOfFirstCard == card.contentShape {
+                sameShapesCount += 1
+            } else if midCard != nil && midCard!.id != card.id && midCard!.contentShape == card.contentShape {
+                sameShapesCount += 1
+            }
+            
+            if colorOfFirstCard == card.contentColor {
+                sameColorCount += 1
+            } else if midCard != nil && midCard!.id != card.id && midCard!.contentColor == card.contentColor {
+                sameColorCount += 1
+            }
+            
+            if shadingOfFirstCard == card.contentShading {
+                sameShadingCount += 1
+            } else if midCard != nil && midCard!.id != card.id && midCard!.contentShading == card.contentShading {
+                sameShadingCount += 1
+            }
+        }
+        if sameShapesCount == 3 {
+            shapesAreSame = true
+        }
+        if sameColorCount == 3 {
+            colorsAreSame = true
+        }
+        if sameShadingCount == 3 {
+            shadingsAreSame = true
+        }
+        
+        // case 1
+        if shapesAreSame {
+            if sameColorCount == 1 && sameShadingCount == 1 {
+                isThreeMatched = true
+            }
+        }
+        // case 2
+        else if shadingsAreSame {
+            if sameColorCount == 1 && sameShapesCount == 1 {
+                isThreeMatched = true
+            }
+        }
+        // case 3
+        else if colorsAreSame {
+            if sameShadingCount == 1 && sameShapesCount == 1 {
+                isThreeMatched = true
+            }
+        }
+        // case 4
+        else if sameShadingCount == 1 && sameColorCount == 1 && sameShapesCount == 1 {
+            isThreeMatched = true
+        } else {
+            isThreeMatched = false
+        }
+        
+        if isThreeMatched {
+            for card in selectedCards {
+                guard let index = cards.firsrIndexOf(matching: card) else { return }
                 cards[index].isMatched = true
                 cards[index].isChecked = true
             }
-            isThreeMatched = true
         } else {
-            
-            for i in 0..<3 {
-                let index = cards.firsrIndexOf(matching: selectedCards[i])!
+            for card in selectedCards {
+                guard let index = cards.firsrIndexOf(matching: card) else { return }
                 cards[index].isMatched = false
                 cards[index].isChecked = true
             }
-            isThreeMatched = false
         }
+        
         
     }
     
@@ -155,7 +184,6 @@ struct SetGame<CardContentType> {
                               contentColor: content.color,
                               contentShading: content.shading))
         }
-        print(cards)
         self.cards.shuffle()
         
     }

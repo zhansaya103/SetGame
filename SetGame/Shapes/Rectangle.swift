@@ -30,7 +30,7 @@ struct Rectangle: Shape {
         )
         
         p.move(to: center)
-        p.addLines([topleft, topRight, downRight, downLeft, topleft])
+        p.addLines([topleft, topRight, downRight, downLeft, topleft, topRight])
         
         return p
     }

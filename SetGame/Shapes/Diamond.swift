@@ -30,7 +30,7 @@ struct Diamond: Shape {
         )
         
         p.move(to: center)
-        p.addLines([up, right, down, left, up])
+        p.addLines([up, right, down, left, up, right])
         
         return p
     }
